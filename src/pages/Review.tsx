@@ -41,7 +41,7 @@ export default function Review() {
     load();
   }, []);
 
-  const decide = async (decision: "uphold" | "overturn" | "escalate") => {
+  const decide = async (decision: "approved" | "rejected" | "escalated") => {
     if (!active) return;
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
@@ -112,9 +112,9 @@ export default function Review() {
               <div className="space-y-2">
                 <Textarea placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
                 <div className="flex gap-2">
-                  <Button size="sm" onClick={() => decide("uphold")}>Uphold</Button>
-                  <Button size="sm" variant="outline" onClick={() => decide("overturn")}>Overturn</Button>
-                  <Button size="sm" variant="destructive" onClick={() => decide("escalate")}>Escalate</Button>
+                  <Button size="sm" onClick={() => decide("approved")}>Uphold</Button>
+                  <Button size="sm" variant="outline" onClick={() => decide("rejected")}>Overturn</Button>
+                  <Button size="sm" variant="destructive" onClick={() => decide("escalated")}>Escalate</Button>
                 </div>
               </div>
             </div>

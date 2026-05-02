@@ -98,7 +98,7 @@ export default function Policy() {
         <div className="lg:col-span-8">
           <PolicyForm
             key={editing?.id ?? "new"}
-            initialValues={editing ?? undefined}
+            initialValues={editing ? { ...editing, block_mode: editing.block_mode as never } : undefined}
             onSubmit={handleSave}
             submitting={submitting}
           />
