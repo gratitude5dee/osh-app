@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
 All colors MUST be HSL.
 */
 
@@ -39,47 +39,45 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Ohhh.SH editorial landing tokens (HSL). Scoped via .osh-root + osh-* Tailwind colors. */
+    --osh-bg: 240 8% 4%;            /* #0A0A0B */
+    --osh-surface: 240 6% 7%;       /* #111113 */
+    --osh-surface-2: 230 8% 9%;     /* #16171A */
+    --osh-ink: 40 21% 95%;          /* #F5F4F1 */
+    --osh-ink-mute: 39 7% 63%;      /* #A6A39C */
+    --osh-ink-faint: 40 4% 34%;     /* #5A5853 */
+    --osh-rule: 240 5% 15%;         /* #232327 */
+    --osh-accent: 70 100% 68%;      /* #E8FF5C */
+    --osh-allow: 144 65% 65%;       /* #6BE39A */
+    --osh-review: 41 88% 64%;       /* #F6C453 */
+    --osh-block: 0 100% 68%;        /* #FF5E5E */
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -102,4 +100,157 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
+
+/* ---------------------------------------------------------------- */
+/* Ohhh.SH landing scope. All rules below only apply inside .osh-root */
+/* so the rest of the app keeps its current shadcn theme.            */
+/* ---------------------------------------------------------------- */
+
+.osh-root {
+  background-color: hsl(var(--osh-bg));
+  color: hsl(var(--osh-ink));
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.osh-root ::selection {
+  background-color: hsl(var(--osh-accent));
+  color: hsl(var(--osh-bg));
+}
+
+.osh-root .osh-mono {
+  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-feature-settings: "tnum", "zero";
+  letter-spacing: 0;
+}
+
+.osh-root .osh-display {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  font-optical-sizing: auto;
+}
+
+.osh-root .osh-rule {
+  border-color: hsl(var(--osh-rule));
+}
+
+/* Visible focus ring across the landing surface. Never removed. */
+.osh-root :focus-visible {
+  outline: 2px solid hsl(var(--osh-accent));
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Hero "before" underline — draws once, ~600ms after mount. */
+@keyframes osh-underline {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.osh-root .osh-underline-em {
+  font-style: italic;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.06em;
+}
+.osh-root .osh-underline-em::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: hsl(var(--osh-accent));
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: osh-underline 600ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards;
+}
+
+/* Live ribbon marquee. Transform-only for compositor smoothness. */
+@keyframes osh-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.osh-root .osh-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: osh-marquee var(--osh-marquee-duration, 60s) linear infinite;
+  will-change: transform;
+}
+.osh-root .osh-marquee[data-paused="true"] .osh-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Soft pulse for the live dot. */
+@keyframes osh-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.85); }
+}
+.osh-root .osh-pulse {
+  animation: osh-pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* SVG one-shot draw (HowGrid icons). */
+@keyframes osh-draw {
+  from { stroke-dashoffset: var(--osh-dash, 240); }
+  to   { stroke-dashoffset: 0; }
+}
+.osh-root .osh-draw[data-play="true"] path,
+.osh-root .osh-draw[data-play="true"] circle,
+.osh-root .osh-draw[data-play="true"] rect,
+.osh-root .osh-draw[data-play="true"] line {
+  stroke-dasharray: var(--osh-dash, 240);
+  stroke-dashoffset: var(--osh-dash, 240);
+  animation: osh-draw 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Film grain overlay (decorative, fixed, behind content). */
+.osh-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: var(--osh-grain-opacity, 0.03);
+  mix-blend-mode: overlay;
+  transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reduced motion: kill anything that moves; keep static composition. */
+@media (prefers-reduced-motion: reduce) {
+  .osh-root .osh-marquee-track,
+  .osh-root .osh-underline-em::after,
+  .osh-root .osh-pulse,
+  .osh-root .osh-draw[data-play="true"] path,
+  .osh-root .osh-draw[data-play="true"] circle,
+  .osh-root .osh-draw[data-play="true"] rect,
+  .osh-root .osh-draw[data-play="true"] line {
+    animation: none !important;
+  }
+  .osh-root .osh-underline-em::after { transform: scaleX(1); }
+  .osh-grain { display: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* Skip link */
+.osh-root .osh-skip {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  transform: translateY(-200%);
+  background: hsl(var(--osh-ink));
+  color: hsl(var(--osh-bg));
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  z-index: 100;
+  transition: transform 180ms ease-out;
+}
+.osh-root .osh-skip:focus { transform: translateY(0); }

@@ -57,6 +57,25 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Ohhh.SH landing palette. Use as: bg-osh-bg, text-osh-ink, border-osh-rule, etc.
+        osh: {
+          bg: "hsl(var(--osh-bg))",
+          surface: "hsl(var(--osh-surface))",
+          "surface-2": "hsl(var(--osh-surface-2))",
+          ink: "hsl(var(--osh-ink))",
+          "ink-mute": "hsl(var(--osh-ink-mute))",
+          "ink-faint": "hsl(var(--osh-ink-faint))",
+          rule: "hsl(var(--osh-rule))",
+          accent: "hsl(var(--osh-accent))",
+          allow: "hsl(var(--osh-allow))",
+          review: "hsl(var(--osh-review))",
+          block: "hsl(var(--osh-block))",
+        },
+      },
+      fontFamily: {
+        display: ['"Inter"', "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+        sans: ['"Inter"', "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+        mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,20 +84,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
