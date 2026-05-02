@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import Landing from "@/pages/Landing";
 
 vi.mock("@/hooks/useAuth", () => ({
@@ -11,7 +12,9 @@ describe("Landing", () => {
   it("renders the hero headline and primary CTA", () => {
     const { getByRole, getAllByRole } = render(
       <MemoryRouter>
-        <Landing />
+        <TooltipProvider>
+          <Landing />
+        </TooltipProvider>
       </MemoryRouter>,
     );
 
