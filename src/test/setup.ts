@@ -23,6 +23,20 @@ class ResizeObserverPolyfill {
 (window as any).ResizeObserver = ResizeObserverPolyfill;
 (global as any).ResizeObserver = ResizeObserverPolyfill;
 
+class IntersectionObserverPolyfill {
+  constructor(_cb: unknown, _opts?: unknown) {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords() { return []; }
+  root = null;
+  rootMargin = "";
+  thresholds = [];
+}
+(globalThis as any).IntersectionObserver = IntersectionObserverPolyfill;
+(window as any).IntersectionObserver = IntersectionObserverPolyfill;
+(global as any).IntersectionObserver = IntersectionObserverPolyfill;
+
 if (!(window as any).PointerEvent) {
   (window as any).PointerEvent = class PointerEvent extends Event {} as any;
 }
