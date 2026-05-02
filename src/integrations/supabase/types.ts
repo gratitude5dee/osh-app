@@ -446,25 +446,28 @@ export type Database = {
         Row: {
           created_at: string
           decision: Database["public"]["Enums"]["review_status"]
+          event_id: string | null
           id: string
           notes: string | null
-          review_queue_item_id: string
+          review_queue_item_id: string | null
           reviewer_id: string
         }
         Insert: {
           created_at?: string
           decision: Database["public"]["Enums"]["review_status"]
+          event_id?: string | null
           id?: string
           notes?: string | null
-          review_queue_item_id: string
+          review_queue_item_id?: string | null
           reviewer_id: string
         }
         Update: {
           created_at?: string
           decision?: Database["public"]["Enums"]["review_status"]
+          event_id?: string | null
           id?: string
           notes?: string | null
-          review_queue_item_id?: string
+          review_queue_item_id?: string | null
           reviewer_id?: string
         }
         Relationships: [
@@ -878,7 +881,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      search_all: {
+        Args: { q: string }
+        Returns: {
+          body: string
+          created_at: string
+          id: string
+          metadata: Json
+          object_id: string
+          object_type: string
+          rank: number
+          tags: string[]
+          title: string
+        }[]
+      }
     }
     Enums: {
       job_status:
