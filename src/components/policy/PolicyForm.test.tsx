@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { PolicyForm, POLICY_DEFAULTS } from "@/components/policy/PolicyForm";
 
 describe("PolicyForm", () => {
@@ -20,12 +20,12 @@ describe("PolicyForm", () => {
     const onSubmit = vi.fn();
     render(<PolicyForm onSubmit={onSubmit} />);
     fireEvent.click(screen.getByRole("button", { name: /save policy/i }));
-    await new Promise((r) => setTimeout(r, 0));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalled());
     expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
       block_mode: "blackout",
       threshold: 0.7,
       fail_open: false,
       model: "Qwen/Qwen3.5-9B",
-    }));
+    }), expect.anything());
   });
 });
