@@ -19,7 +19,9 @@ class ResizeObserverPolyfill {
   unobserve() {}
   disconnect() {}
 }
-(globalThis as any).ResizeObserver = (globalThis as any).ResizeObserver ?? ResizeObserverPolyfill;
+(globalThis as any).ResizeObserver = ResizeObserverPolyfill;
+(window as any).ResizeObserver = ResizeObserverPolyfill;
+(global as any).ResizeObserver = ResizeObserverPolyfill;
 
 if (!(window as any).PointerEvent) {
   (window as any).PointerEvent = class PointerEvent extends Event {} as any;
