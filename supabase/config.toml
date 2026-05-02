@@ -1,1 +1,7 @@
 project_id = "pylarlurrffjenwnnyvd"
+
+[functions.mux-webhook]
+verify_jwt = false
+
+[functions.models-list]
+verify_jwt = false
